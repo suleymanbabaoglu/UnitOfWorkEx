@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnitOfWorkEx.Database;
 
 namespace UnitOfWorkEx.UOW
 {
     public interface IUnitOfWork
     {
-        Task SaveAsync();
+        public DatabaseContext Context { get; }
 
-        void RollBack();
-
-        Task DisposeAsync();
+        public Task SaveAsync();
+        public void RollBack();
+        public Task DisposeAsync();
     }
 }

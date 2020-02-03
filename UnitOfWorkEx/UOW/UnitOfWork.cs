@@ -8,26 +8,26 @@ namespace UnitOfWorkEx.UOW
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DatabaseContext context;
+        public DatabaseContext Context { get; }
 
         public UnitOfWork(DatabaseContext context)
         {
-            this.context = context;
+            Context = context;
         }
 
         public async Task DisposeAsync()
         {
-            await context.DisposeAsync();
+            await Context.DisposeAsync();
         }
 
         public void RollBack()
         {
-            context.ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
+            Context.ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
         }
 
         public async Task SaveAsync()
         {
-            await context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
     }
 }

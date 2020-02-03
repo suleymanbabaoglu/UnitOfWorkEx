@@ -10,11 +10,9 @@ namespace UnitOfWorkEx.Services
 {
     public class ProductService : IProductService
     {
-        private readonly DatabaseContext context;
         private readonly IUnitOfWork unitOfWork;
-        public ProductService(DatabaseContext context,IUnitOfWork unitOfWork)
+        public ProductService(IUnitOfWork unitOfWork)
         {
-            this.context = context;
             this.unitOfWork = unitOfWork;
         }
 
@@ -22,7 +20,7 @@ namespace UnitOfWorkEx.Services
         {
             try
             {
-                context.Products.AddAsync(product);
+                unitOfWork.Context.Products.AddAsync(product);
                 return product;
             }
             catch (Exception)
@@ -36,7 +34,7 @@ namespace UnitOfWorkEx.Services
         {
             try
             {
-                var product = context.Products.Find(productId);
+                var product = unitOfWork.Context.Products.Find(productId);
                 return product;
             }
             catch (Exception)
@@ -50,7 +48,7 @@ namespace UnitOfWorkEx.Services
         {
             try
             {
-                var productList = context.Products.ToList();
+                var productList = unitOfWork.Context.Products.ToList();
                 return productList;
             }
             catch (Exception)
@@ -65,7 +63,7 @@ namespace UnitOfWorkEx.Services
             try
             {
                 var product = FindById(productId);
-                context.Products.Remove(product);
+                unitOfWork.Context.Products.Remove(product);
                 return product;
             }
             catch (Exception)
@@ -79,7 +77,7 @@ namespace UnitOfWorkEx.Services
         {
             try
             {
-                context.Entry(product).State = EntityState.Modified;
+                unitOfWork.Context.Entry(product).State = EntityState.Modified;
             }
             catch (Exception)
             {
