@@ -2,20 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnitOfWorkEx.Database;
-using UnitOfWorkEx.UOW;
 
 namespace UnitOfWorkEx.Services
 {
     public class ProductService : IProductService
     {
         private readonly DatabaseContext context;
-        private readonly IUnitOfWork unitOfWork;
-        public ProductService(DatabaseContext context,IUnitOfWork unitOfWork)
+
+        public ProductService(DatabaseContext context)
         {
             this.context = context;
-            this.unitOfWork = unitOfWork;
         }
 
         public Product AddProduct(Product product)
@@ -27,7 +24,6 @@ namespace UnitOfWorkEx.Services
             }
             catch (Exception)
             {
-                unitOfWork.DisposeAsync();
                 throw;
             }
         }
@@ -41,7 +37,6 @@ namespace UnitOfWorkEx.Services
             }
             catch (Exception)
             {
-                unitOfWork.DisposeAsync();
                 throw;
             }
         }
@@ -55,7 +50,6 @@ namespace UnitOfWorkEx.Services
             }
             catch (Exception)
             {
-                unitOfWork.DisposeAsync();
                 throw;
             }
         }
@@ -70,7 +64,6 @@ namespace UnitOfWorkEx.Services
             }
             catch (Exception)
             {
-                unitOfWork.DisposeAsync();
                 throw;
             }
         }
@@ -83,7 +76,6 @@ namespace UnitOfWorkEx.Services
             }
             catch (Exception)
             {
-                unitOfWork.DisposeAsync();
                 throw;
             }
         }
