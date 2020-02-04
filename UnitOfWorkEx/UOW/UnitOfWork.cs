@@ -6,7 +6,7 @@ using UnitOfWorkEx.Database;
 
 namespace UnitOfWorkEx.UOW
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly DatabaseContext context;
 
@@ -15,9 +15,11 @@ namespace UnitOfWorkEx.UOW
             this.context = context;
         }
 
-        public async Task DisposeAsync()
+        public void Dispose()
         {
-            await context.DisposeAsync();
+            context.DisposeAsync();
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
 
         public void RollBack()

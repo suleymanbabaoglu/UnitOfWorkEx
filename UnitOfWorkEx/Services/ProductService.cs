@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnitOfWorkEx.Database;
 
 namespace UnitOfWorkEx.Services
@@ -15,15 +16,18 @@ namespace UnitOfWorkEx.Services
             this.context = context;
         }
 
-        public Product AddProduct(Product product)
+        public async Task<Product> AddProduct(Product product)
         {
+            using var transaction = context.Database.BeginTransaction();
             try
             {
-                context.Products.AddAsync(product);
+                await context.Products.AddAsync(product);
+                transaction.Commit();
                 return product;
             }
             catch (Exception)
             {
+                transaction.Rollback();
                 throw;
             }
         }

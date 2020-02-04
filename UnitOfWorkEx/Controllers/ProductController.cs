@@ -39,7 +39,14 @@ namespace UnitOfWorkEx.Controllers
         [HttpPost]
         public IActionResult AddProduct(Product product)
         {
+            var pro = new Product()
+            {
+                ProductCategory = "a",
+                ProductName = " as",
+                ProductPrice = 12
+            };
             productService.AddProduct(product);
+
             unitOfWork.SaveAsync();
             return Ok(product);
         }

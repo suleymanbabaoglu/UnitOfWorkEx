@@ -10,7 +10,7 @@ namespace UnitOfWorkEx.Services
     {
         IEnumerable<Product> GetProductList();
 
-        Product AddProduct(Product product);
+        Task<Product> AddProduct(Product product);
 
         Product FindById(int productId);
 

@@ -10,7 +10,5 @@ namespace UnitOfWorkEx.UOW
         Task SaveAsync();
 
         void RollBack();
-
-        Task DisposeAsync();
     }
 }
